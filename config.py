@@ -42,8 +42,6 @@ cfg.load()
 cfg.save()
 
 
-
-
 def show_power_menu(qtile, message):
     from qtile_extras.popup.toolkit import (PopupRelativeLayout, PopupText)
     text_message = PopupText(text=message, pos_x=0, pos_y=0, width=1, height=1, h_align="center")
@@ -58,7 +56,6 @@ keys = [
     # A list of available commands that can be bound to keys can be found
     # at https://docs.qtile.org/en/latest/manual/config/lazy.html
     # Switch between windows
-    Key([mod], "i", lazy.function(show_power_menu, "hello"), desc="Move focus to left"),
     Key([mod], "left", lazy.layout.left(), desc="Move focus to left"),
     Key([mod], "right", lazy.layout.right(), desc="Move focus to right"),
     Key([mod], "down", lazy.layout.down(), desc="Move focus down"),
@@ -179,7 +176,7 @@ widget_defaults = dict(
 )
 extension_defaults = widget_defaults.copy()
 
-from my import weather, keyboard_kbdd, clock, quick_exit
+from my import weather, keyboard_kbdd, clock, quick_exit, launcher
 
 # Drag floating layouts.
 mouse = [
@@ -198,6 +195,7 @@ screens = [
         ),
         bottom=bar.Bar(
             [
+                launcher.Launcher(),
                 widget.CurrentLayoutIcon(),
                 widget.GroupBox(
                     disable_drag=True
@@ -205,9 +203,13 @@ screens = [
                 widget.LaunchBar([
                     ["firefox", "firefox", "firefox"],
                     ["/home/vyacheslav/data/apps/clion-2023.2.2/bin/clion.png", "/home/vyacheslav/data/apps/clion-2023.2.2/bin/clion.sh", "cline"],
-                    ["nautilus", "nautilus", "nautilus"],
+                    ["/usr/share/icons/Yaru-prussiangreen/32x32@2x/apps/nautilus.png", "nautilus", "nautilus"],
                     ["clementine", "clementine", "clementine"],
-
+                    [
+                        "/var/lib/swcatalog/icons/ubuntu-jammy-universe/64x64/telegram-desktop_telegram.png",
+                        "/home/vyacheslav/data/apps/Telegram/Telegram",
+                        "Telegram"
+                    ]
                 ]),
                 widget.Prompt(),
                 widget.TaskList(
@@ -221,13 +223,11 @@ screens = [
                     },
                     name_transform=lambda name: name.upper(),
                 ),
-                #widget.TextBox("default config", name="default"),
-                widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
                 # widget.StatusNotifier(),
-                widget.Volume(
-                    emoji=True,
-                ),
+                #widget.Volume(
+                #    emoji=True,
+                #   ),
                 widget.Systray(),
                 clock.Clock(),
                 weather.OpenWeather(
