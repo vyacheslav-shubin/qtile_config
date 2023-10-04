@@ -8,27 +8,34 @@ from libqtile.utils import add_signal_receiver
 from libqtile.widget import base
 from libqtile.lazy import lazy
 import subprocess
-from qtile_extras.popup.toolkit import (PopupRelativeLayout, PopupText, PopupImage)
+from qtile_extras.popup.toolkit import (PopupGridLayout, PopupText, PopupImage)
 
 controls = [
     PopupImage(
-        filename="/usr/share/icons/Yaru-prussiangreen/32x32@2x/apps/nautilus.png",
-        pos_x=0, pos_y=0,
-        width=0.5, height=1,
-        mouse_callbacks={
-            "Button1": lazy.spawn("nautilus -w")
-        }
+        row=0, col=0,
+        filename="/usr/share/icons/hicolor/64x64/apps/firefox.png",
+        mouse_callbacks={"Button1": lazy.spawn("firefox")}
     ),
     PopupImage(
+        row=0, col=1,
         filename="/var/lib/swcatalog/icons/ubuntu-jammy-universe/64x64/telegram-desktop_telegram.png",
-        pos_x=0.5, pos_y=0,
-        width=0.5, height=1,
-        mouse_callbacks={
-            "Button1": lazy.spawn("/home/vyacheslav/data/apps/Telegram/Telegram")
-        }
-
+        mouse_callbacks={"Button1": lazy.spawn("/home/vyacheslav/data/apps/Telegram/Telegram")}
     ),
-
+   PopupImage(
+       row=0, col=2,
+       filename="/usr/share/icons/Yaru-prussiangreen/32x32@2x/apps/nautilus.png",
+       mouse_callbacks={"Button1": lazy.spawn("nautilus -w")}
+   ),
+   PopupImage(
+       row=0, col=3,
+       filename="/usr/share/icons/hicolor/64x64/apps/clementine.png",
+       mouse_callbacks={"Button1": lazy.spawn("clementine")}
+   ),
+    PopupImage(
+        row=1, col=0,
+        filename="/var/lib/swcatalog/icons/ubuntu-jammy-universe/64x64/freecad-common_freecad.png",
+        mouse_callbacks={"Button1": lazy.spawn("/home/vyacheslav/data/apps/FreeCAD_0.21.1-Linux-x86_64.AppImage")}
+    )
 ]
 
 #def _show_power_menu(qtile):
@@ -42,13 +49,15 @@ class Launcher(base._TextBox):
         pass
 
     def on_mouse_click(self, qtile):
+        r=2
+        c=4
+        layout = PopupGridLayout(
+            qtile, width=c*64, height=r*64,
+            rows=r, cols=c,
+            hide_on_mouse_leave=True,
+            controls=controls, background="00000060",initial_focus=None,    )
 
-        layout = PopupRelativeLayout(
-                qtile, width=128, height=64,
-                hide_on_mouse_leave=True,
-                controls=controls, background="00000060",initial_focus=None,    )
-
-        layout.show(x=0, y=1340)
+        layout.show(x=0, y=1405-r*64)
         pass
 
     def __init__(self, **config):

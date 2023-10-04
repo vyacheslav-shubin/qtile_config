@@ -113,15 +113,15 @@ keys = [
 #     Group("a"),
 # ]
 groups = [
-    Group("1"),
-    Group("2"),
-    Group("3"),
-    Group("4"),
-    Group("5"),
-    Group("6"),
-    Group("7"),
-    Group("8"),
-    Group("9"),
+    Group("1", label="1️⃣"),
+    Group("2", label="2️⃣"),
+    Group("3", label="3️⃣"),
+    Group("4", label="4️⃣"),
+    Group("5", label="5️⃣"),
+    Group("6", label="6️⃣"),
+    Group("7", label="7️⃣"),
+    Group("8", label="8️⃣"),
+    Group("9", label="9️⃣"),
     # ScratchPad("scratchpad", [
     #     DropDown("term", "urxvt", opacity=0.8),
     #     DropDown("qtile shell", "urxvt -hold -e 'qtile shell'", x=0.05, y=0.4, width=0.9, height=0.6, opacity=0.9, on_focus_lost_hide=True)
@@ -198,7 +198,10 @@ screens = [
                 launcher.Launcher(),
                 widget.CurrentLayoutIcon(),
                 widget.GroupBox(
-                    disable_drag=True
+                    disable_drag=True,
+                    padding=0,
+                    this_current_screen_border="00FF00",
+                    invert_mouse_wheel=True
                 ),
                 widget.LaunchBar([
                     ["firefox", "firefox", "firefox"],
@@ -236,8 +239,8 @@ screens = [
                     #format="{icon} {temp}° {humidity}% {pressure_mm}",
                     formats=["{icon} {temp}°","{icon} {temp}° {pressure_mm} {humidity}%"]
                 ),
-                widget.MemoryGraph(type='line', line_width=2, graph_color='FF0000', width=40 ),
-                widget.CPUGraph(type='line', width=40),
+                widget.MemoryGraph(type='line', border_width=1, line_width=1, graph_color='FF0000', width=40 ),
+                widget.CPUGraph(type='line', line_width=1, border_width=1, width=40),
                 keyboard_kbdd.KeyboardKbdd(configured_keyboards=["🇬🇧", "🇷🇺"],width=35),
                 quick_exit.QuickExit(default_text="❌"),
             ],
